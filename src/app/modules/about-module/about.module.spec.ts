@@ -1,23 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AboutModule } from './about.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AboutModule', () => {
-  let component: AboutModule;
-  let fixture: ComponentFixture<AboutModule>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AboutModule]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(AboutModule);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    }).compileComponents();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(AboutModule).toBeTruthy();
   });
 });

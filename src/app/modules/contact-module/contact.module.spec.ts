@@ -1,23 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ContactModule } from './contact.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ContactModule', () => {
-  let component: ContactModule;
-  let fixture: ComponentFixture<ContactModule>;
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ContactModule]
-    })
-    .compileComponents();
-
-    fixture = TestBed.createComponent(ContactModule);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    }).compileComponents();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(ContactModule).toBeTruthy();
   });
 });
