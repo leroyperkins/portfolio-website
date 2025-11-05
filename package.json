@@ -4,9 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production",
+    "start:develop": "ng serve --configuration develop",
+    "start:prod": "ng serve --configuration production",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:develop": "ng build --configuration develop",
+    "build:prod": "ng build --configuration production"
   },
   "prettier": {
     "printWidth": 100,
