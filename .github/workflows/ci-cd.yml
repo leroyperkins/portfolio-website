@@ -44,10 +44,12 @@ jobs:
           fi
 
       - name: Upload artifact
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: dist/your-app-name  # Replace with your actual dist folder
+          path: dist/portfolio-website/browser  # Replace with your actual dist folder
+          retention-days: 5
 
   deploy:
     needs: build-and-test
@@ -59,7 +61,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist
-          path: dist
+          path: dist/portfolio-website/browser
+
+      -  name: List downloaded files (debug)
+         run: ls -la dist/portfolio-website/browser     
 
       - name: Deploy to Production
         if: github.ref == 'refs/heads/main'
