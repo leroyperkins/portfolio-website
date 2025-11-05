@@ -1,7 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { AboutModule } from './about.module';
-import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AboutModule', () => {
   beforeEach(async () => {
