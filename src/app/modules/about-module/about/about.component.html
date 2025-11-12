@@ -1,48 +1,72 @@
-<div class="max-w-5xl mx-auto p-6 md:p-10 space-y-16">
-  <section class="text-center space-y-8">
-    <h1 class="text-4xl md:text-6xl font-bold text-[--color-text]">
-      Hi, I'm <span class="text-[--color-accent]">Carson Turner</span>
-    </h1>
-    <p class="text-lg md:text-xl text-[--color-text-secondary] max-w-2xl mx-auto font-light">
-      Full-Stack Developer | Angular | TypeScript | Tailwind CSS
-    </p>
-    <div class="flex flex-col sm:flex-row gap-5 justify-center mt-10">
-      <a routerLink="/projects"
-         class="px-6 py-3 bg-[--color-accent] hover:bg-[--color-accent-hover] text-black font-medium rounded-lg transition shadow-lg">
-        View My Projects
-      </a>
-      <a routerLink="/contact"
-         class="px-6 py-3 border-2 border-[--color-accent] text-[--color-accent] hover:bg-[--color-accent]/10 rounded-lg font-medium transition">
-        Get In Touch
-      </a>
-    </div>
-  </section>
-  <section class="bg-[--color-surface]/60 backdrop-blur-sm rounded-2xl p-8 border border-[--color-border] shadow-xl">
-    <h2 class="text-2xl font-semibold text-[--color-text] mb-6 tracking-tight">Skills & Technologies</h2>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
-      <div class="bg-[--color-surface] p-5 rounded-xl text-center border border-[--color-border] hover:border-[--color-accent] transition">
-        <div class="text-2xl md:text-3xl font-mono text-[--color-accent] font-bold">Angular</div>
-      </div>
-      <div class="bg-[--color-surface] p-5 rounded-xl text-center border border-[--color-border] hover:border-[--color-accent] transition">
-        <div class="text-2xl md:text-3xl font-mono text-[--color-accent] font-bold">TypeScript</div>
-      </div>
-      <div class="bg-[--color-surface] p-5 rounded-xl text-center border border-[--color-border] hover:border-[--color-accent] transition">
-        <div class="text-2xl md:text-3xl font-mono text-[--color-accent] font-bold">Tailwind</div>
-      </div>
-      <div class="bg-[--color-surface] p-5 rounded-xl text-center border border-[--color-border] hover:border-[--color-accent] transition">
-        <div class="text-2xl md:text-3xl font-mono text-[--color-accent] font-bold">Node.js</div>
-      </div>
-    </div>
-  </section>
-  <section>
-    <h2 class="text-2xl font-semibold text-[--color-text] mb-5">A Bit About Me</h2>
-    <p class="text-base md:text-lg text-[--color-text-secondary] leading-relaxed">
-      I'm a passionate developer who loves building clean, fast, and user-friendly web apps. 
-      I specialize in Angular and modern frontend tooling, but I'm always learning.
-    </p>
-    <p class="mt-4 text-base md:text-lg text-[--color-text-secondary] leading-relaxed">
-      When I'm not coding, you can find me hiking, reading sci-fi, or tinkering with new tech.
-    </p>
-  </section>
+<!-- src/app/components/about/about.component.html -->
+<section class="py-20 bg-[--color-background]">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center mb-12 text-[--color-text] tracking-tight">
+      Technical Arsenal
+    </h2>
 
-</div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Languages -->
+      <div class="bg-[--color-surface]/60 backdrop-blur-sm rounded-xl p-6 border border-[--color-border]">
+        <h3 class="text-lg font-mono text-[--color-accent] mb-4">Languages</h3>
+        <div class="flex flex-wrap gap-2">
+          <span *ngFor="let f of data.skills.languages"
+                class="px-3 py-1 bg-[--color-surface] text-[--color-text-secondary] text-xs font-mono rounded-full border border-[--color-border]">
+            {{ f }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Frameworks -->
+      <div class="bg-[--color-surface]/60 backdrop-blur-sm rounded-xl p-6 border border-[--color-border]">
+        <h3 class="text-lg font-mono text-[--color-accent] mb-4">Frameworks</h3>
+        <div class="flex flex-wrap gap-2">
+          <span *ngFor="let f of data.skills.frameworks"
+                class="px-3 py-1 bg-[--color-surface] text-[--color-text-secondary] text-xs font-mono rounded-full border border-[--color-border]">
+            {{ f }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Tools -->
+      <div class="bg-[--color-surface]/60 backdrop-blur-sm rounded-xl p-6 border border-[--color-border]">
+        <h3 class="text-lg font-mono text-[--color-accent] mb-4">DevOps & Tools</h3>
+        <div class="flex flex-wrap gap-2">
+          <span *ngFor="let t of data.skills.tools"
+                class="px-3 py-1 bg-[--color-surface] text-[--color-text-secondary] text-xs font-mono rounded-full border border-[--color-border]">
+            {{ t }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Concepts -->
+      <div class="bg-[--color-surface]/60 backdrop-blur-sm rounded-xl p-6 border border-[--color-border]">
+        <h3 class="text-lg font-mono text-[--color-accent] mb-4">Expertise</h3>
+        <div class="space-y-2 text-sm text-[--color-text-secondary]">
+          <p *ngFor="let c of data.skills.concepts">> {{ c }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="mt-16 bg-[--color-surface]/60 backdrop-blur-sm rounded-xl p-6 border border-[--color-border]">
+      <h3 class="text-lg font-mono text-[--color-accent] mb-3">Education</h3>
+      <p class="text-[--color-text] font-medium">{{ data.education.degree }}</p>
+      <p class="text-sm text-[--color-text-secondary]">{{ data.education.school }}</p>
+      <p class="text-xs font-mono text-[--color-accent]">Graduated {{ data.education.graduation }}</p>
+    </div>
+
+    <!-- Extracurriculars -->
+    <div class="mt-8 grid md:grid-cols-2 gap-6">
+      <div *ngFor="let e of data.extracurriculars"
+           class="bg-[--color-surface]/60 backdrop-blur-sm rounded-xl p-6 border border-[--color-border]">
+        <h3 class="text-lg font-mono text-[--color-accent] mb-2">{{ e.name }}</h3>
+        <p class="text-sm text-[--color-text-secondary] italic">{{ e.role }}</p>
+        <p class="text-xs font-mono text-[--color-accent] mt-1">{{ e.dates }}</p>
+        <ul class="mt-3 text-xs text-[--color-text-secondary] space-y-1">
+          <li *ngFor="let b of e.bullets">› {{ b }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
