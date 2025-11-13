@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RESUME_DATA, ResumeData } from '../data/resume.data';
+import { RESUME_DATA, ResumeData } from '../../data/resume.data';
 
 @Injectable({ providedIn: 'root' })
 export class ResumeService {

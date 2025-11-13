@@ -1,26 +1,37 @@
-<nav class="bg-[--color-surface]/80 backdrop-blur-md border-b border-[--color-border] text-[--color-text] shadow-lg sticky top-0 z-50">
-  <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between">
-    <div class="flex gap-6 md:gap-8 text-sm md:text-base">
-      <a routerLink="" 
-         routerLinkActive="font-bold underline" 
-         class="hover:text-[--color-accent] hover:underline underline-offset-4 transition duration-200">
-        Home
-      </a>
-      <a routerLink="/about" 
-         routerLinkActive="font-bold underline" 
-         class="hover:text-[--color-accent] hover:underline underline-offset-4 transition duration-200">
-        About
-      </a>
-      <a routerLink="/projects" 
-         routerLinkActive="font-bold underline" 
-         class="hover:text-[--color-accent] hover:underline underline-offset-4 transition duration-200">
-        Projects
-      </a>
-      <a routerLink="/contact" 
-         routerLinkActive="font-bold underline" 
-         class="hover:text-[--color-accent] hover:underline underline-offset-4 transition duration-200">
-        Contact
-      </a>
+<!-- src/app/components/header/header.component.html -->
+<nav class="bg-[var(--color-surface)]/80 backdrop-blur-md border-b border-[var(--color-border)] text-[var(--color-text)] shadow-lg sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-0 py-4 flex items-center justify-between relative">
+
+    <!-- Left: Theme Toggle (absolutely positioned flush left) -->
+    <div class="absolute left-4">
+      <app-theme-toggle></app-theme-toggle>
     </div>
+
+    <!-- Center: Navigation Links -->
+    <div class="w-full flex justify-center">
+      <div class="flex gap-6 md:gap-8 text-sm md:text-base">
+        <a routerLink=""
+           routerLinkActive="font-bold underline"
+           class="hover:text-[var(--color-accent)] hover:underline underline-offset-4 transition duration-200">
+          Home
+        </a>
+        <a routerLink="/about"
+           routerLinkActive="font-bold underline"
+           class="hover:text-[var(--color-accent)] hover:underline underline-offset-4 transition duration-200">
+          About
+        </a>
+        <a routerLink="/projects"
+           routerLinkActive="font-bold underline"
+           class="hover:text-[var(--color-accent)] hover:underline underline-offset-4 transition duration-200">
+          Projects
+        </a>
+        <a routerLink="/contact"
+           routerLinkActive="font-bold underline"
+           class="hover:text-[var(--color-accent)] hover:underline underline-offset-4 transition duration-200">
+          Contact
+        </a>
+      </div>
+    </div>
+
   </div>
 </nav>
