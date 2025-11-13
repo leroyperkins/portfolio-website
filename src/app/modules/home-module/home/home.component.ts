@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ResumeService } from '../../../services/resume.service';
+import { ResumeService } from '../../../services/resume/resume.service';
 import { ButtonComponent } from "../../../shared/layout/button/button.component";
 import { NgFor } from '@angular/common';
 

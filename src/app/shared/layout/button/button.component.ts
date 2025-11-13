@@ -1,18 +1,22 @@
-// src/app/shared/button/button.component.ts
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-button',
-  imports: [RouterModule],
+  imports: [CommonModule, RouterModule],
   standalone: true,
+  encapsulation: ViewEncapsulation.None,
   template: `
     <button
       [type]="type"
       [routerLink]="routerLink"
-      [class]="classes"
       (click)="tryClick.emit()"
-      class="font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[--color-accent] focus:ring-offset-2 focus:ring-offset-[--color-background]"
+      [ngClass]="[
+        'font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[--color-accent] focus:ring-offset-2 focus:ring-offset-[--color-background]',
+        classes,
+        class
+      ]"
     >
       <ng-content></ng-content>
     </button>
@@ -20,8 +24,9 @@ import { RouterModule } from '@angular/router';
 })
 export class ButtonComponent {
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
-  @Input() variant: 'primary' | 'secondary' | 'tertiary' = 'primary';
+  @Input() variant: 'primary' | 'secondary' | 'tertiary' | 'none' = 'primary';
   @Input() routerLink: string | null = null;
+  @Input() class = '';
 
   @Output() tryClick = new EventEmitter<void>();
 

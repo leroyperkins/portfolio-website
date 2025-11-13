@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ButtonComponent } from "../../../shared/layout/button/button.component";
-import { ResumeService } from '../../../services/resume.service';
+import { ResumeService } from '../../../services/resume/resume.service';
 
 @Component({
   selector: 'app-contact',
