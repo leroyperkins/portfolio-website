@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ButtonComponent } from "../../../shared/layout/button/button.component";
+import { ResumeService } from '../../../services/resume.service';
 
 @Component({
   selector: 'app-contact',
@@ -11,4 +12,6 @@ import { ButtonComponent } from "../../../shared/layout/button/button.component"
     submit() {
   throw new Error('Method not implemented.');
   }
+  private resumeService = inject(ResumeService);
+  data = this.resumeService.data;
 }
