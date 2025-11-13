@@ -39,8 +39,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "20kB",
-                  "maximumError": "30kB"
+                  "maximumWarning": "30kB",
+                  "maximumError": "50kB"
                 }
               ],
               "outputHashing": "all",
@@ -64,8 +64,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "20kB",
-                  "maximumError": "30kB"
+                  "maximumWarning": "30kB",
+                  "maximumError": "50kB"
                 }
               ],
               "outputHashing": "all",
@@ -140,6 +140,7 @@
   "cli": {
     "schematicCollections": [
       "angular-eslint"
-    ]
+    ],
+    "analytics": false
   }
 }
