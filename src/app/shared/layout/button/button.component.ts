@@ -10,7 +10,6 @@ import { RouterModule } from '@angular/router';
     <button
       [type]="type"
       [routerLink]="routerLink"
-      [attr.download]="download ? '' : null"
       [class]="classes"
       (click)="tryClick.emit()"
       class="font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[--color-accent] focus:ring-offset-2 focus:ring-offset-[--color-background]"
@@ -22,8 +21,7 @@ import { RouterModule } from '@angular/router';
 export class ButtonComponent {
   @Input() type: 'button' | 'submit' | 'reset' = 'button';
   @Input() variant: 'primary' | 'secondary' | 'tertiary' = 'primary';
-  @Input() routerLink: any[] | string | null = null;   // ← ADD THIS
-  @Input() download: boolean = false;                 // ← For PDF
+  @Input() routerLink: string | null = null;
 
   @Output() tryClick = new EventEmitter<void>();
 

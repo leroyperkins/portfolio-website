@@ -1,11 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { ButtonComponent } from "../../../shared/layout/button/button.component";
 import { ResumeService } from '../../../services/resume.service';
-import { NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-contact',
-  imports: [ButtonComponent, NgFor, NgIf],
+  imports: [ButtonComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',
 })
