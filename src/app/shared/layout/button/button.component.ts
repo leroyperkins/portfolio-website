@@ -11,9 +11,9 @@ import { RouterModule } from '@angular/router';
     <button
       [type]="type"
       [routerLink]="routerLink"
-      (click)="tryClick.emit()"
+      (click)="click.emit()"
       [ngClass]="[
-        'font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[--color-accent] focus:ring-offset-2 focus:ring-offset-[--color-background]',
+        'font-medium rounded-xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-transparent hover:backdrop-blur-sm hover:scale-102',
         classes,
         class
       ]"
@@ -28,16 +28,16 @@ export class ButtonComponent {
   @Input() routerLink: string | null = null;
   @Input() class = '';
 
-  @Output() tryClick = new EventEmitter<void>();
+  @Output() click = new EventEmitter<void>();
 
   get classes(): string {
     switch (this.variant) {
       case 'primary':
-        return 'w-full py-3 bg-[--color-accent] hover:bg-[--color-accent-hover] text-black shadow-md hover:shadow-lg hover:shadow-[--color-accent]/40';
+        return 'w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white dark:bg-emerald-400 dark:hover:bg-emerald-500 dark:text-black shadow-md hover:shadow-xl hover:shadow-emerald-500/50 dark:hover:shadow-emerald-400/50';  // Hardcoded colors for complete change; enhanced shadow
       case 'secondary':
-        return 'w-full py-3 border-2 border-[--color-accent] text-[--color-accent] hover:bg-[--color-accent]/10 hover:border-[--color-accent-hover]';
+        return 'w-full py-3 border-2 border-emerald-500 text-emerald-500 hover:bg-emerald-500/10 hover:border-emerald-600 dark:border-emerald-400 dark:text-emerald-400 dark:hover:border-emerald-500';
       case 'tertiary':
-        return 'px-4 py-2 text-[--color-accent] hover:underline underline-offset-4';
+        return 'px-4 py-2 text-emerald-600 hover:underline underline-offset-4 dark:text-emerald-400';
       default:
         return '';
     }

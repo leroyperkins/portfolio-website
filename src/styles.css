@@ -10,6 +10,7 @@
   --color-accent: #10b981;
   --color-accent-hover: #059669;
   --color-border: #e5e7eb;
+  --color-text-contrast: #000000; /* Black for high contrast on accents */
 }
 
 .dark {
@@ -20,6 +21,7 @@
   --color-accent: #34d399;
   --color-accent-hover: #10b981;
   --color-border: #334155;
+  --color-text-contrast: #000000; /* Black for high contrast on lighter accents in dark mode */
 }
 
 @theme {
