@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
     <button
       [type]="type"
       [routerLink]="routerLink"
-      (click)="click.emit()"
+      (click)="checkClick.emit()"
       [ngClass]="[
         'font-medium rounded-xl transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-transparent hover:backdrop-blur-sm hover:scale-102',
         classes,
@@ -28,7 +28,7 @@ export class ButtonComponent {
   @Input() routerLink: string | null = null;
   @Input() class = '';
 
-  @Output() click = new EventEmitter<void>();
+  @Output() checkClick = new EventEmitter<void>();
 
   get classes(): string {
     switch (this.variant) {
