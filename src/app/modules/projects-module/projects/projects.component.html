@@ -1,42 +1,53 @@
-<!-- src/app/components/projects/projects.component.html -->
+<!-- src/app/modules/projects-module/projects/projects.component.html -->
 <section class="py-6">
-<div class="max-w-7xl mx-auto p-6 md:p-10">
-  <h1 class="text-4xl md:text-5xl font-bold text-center mb-16 text-gray-900 dark:text-gray-100 tracking-tight">
-    Mission-Critical Projects
-  </h1>
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-    <article *ngFor="let p of data.projects"
-             class="bg-gray-50 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-600 overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-emerald-500/30 dark:hover:shadow-emerald-400/30 transition-all group">
-      
-      <div class="h-48 bg-gray-100 dark:bg-gray-700 border-b border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center">
-        <span class="text-gray-500 dark:text-gray-400 font-mono text-sm">{{ p.title }}</span>
-      </div>
-
-      <div class="p-6 space-y-4">
-        <h3 class="text-xl font-mono font-bold text-emerald-600 dark:text-emerald-400 group-hover:underline">
-          {{ p.title }}
-        </h3>
-        <p class="text-sm italic text-gray-600 dark:text-gray-300">{{ p.role }}</p>
-
-        <p class="text-base text-gray-900 dark:text-gray-100"><strong>Impact:</strong> {{ p.impact }}</p>
-        <p class="text-sm font-mono text-emerald-600 dark:text-emerald-400">↳ {{ p.metrics }}</p>
-
-        <div class="flex flex-wrap gap-2">
-          <span *ngFor="let tech of p.tech"
-                class="px-3 py-1 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-mono rounded-full">
-            {{ tech }}
-          </span>
+  <div class="max-w-7xl mx-auto p-6 md:p-10">
+    <h1 class="text-4xl md:text-5xl font-bold text-center mb-16 text-gray-900 dark:text-gray-100 tracking-tight">
+      Mission-Critical Projects
+    </h1>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <article *ngFor="let p of data.projects"
+               class="bg-gray-50 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-600 overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-emerald-500/30 dark:hover:shadow-emerald-400/30 transition-all group select-none">
+        
+        <div class="h-48 bg-gray-100 dark:bg-gray-700 border-b border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center overflow-hidden">
+          <img *ngIf="p.image; else fallbackTitle"
+               [src]="p.image"
+               [alt]="'Illustrative photo for ' + p.title"
+               [ngClass]="{
+                 'w-full h-full object-cover transition-transform duration-300 group-hover:scale-105': true,
+                 'object-[50%_75%]': p.title.includes('Balloon')
+               }"
+               loading="lazy"
+               (error)="handleImageError($event, p.title) ">
+          <ng-template #fallbackTitle>
+            <span class="text-gray-500 dark:text-gray-400 font-mono text-sm">{{ p.title }}</span>
+          </ng-template>
         </div>
 
-        <div class="flex gap-4 text-sm">
-          <a *ngIf="p.links.live" [href]="p.links.live" target="_blank"
-             class="text-emerald-600 dark:text-emerald-400 hover:underline">Live Demo</a>
-          <a *ngIf="p.links.github && p.links.github !== 'private'" [href]="p.links.github" target="_blank"
-             class="text-emerald-600 dark:text-emerald-400 hover:underline">GitHub</a>
-          <span *ngIf="p.links.github === 'private'" class="text-gray-500 dark:text-gray-400 text-xs italic">Classified</span>
+        <div class="p-6 space-y-4">
+          <h3 class="text-xl font-mono font-bold text-emerald-600 dark:text-emerald-400 group-hover:underline">
+            {{ p.title }}
+          </h3>
+          <p class="text-sm italic text-gray-600 dark:text-gray-300">{{ p.role }}</p>
+
+          <p class="text-base text-gray-900 dark:text-gray-100"><strong>Impact:</strong> {{ p.impact }}</p>
+          <p class="text-sm font-mono text-emerald-600 dark:text-emerald-400">↳ {{ p.metrics }}</p>
+
+          <div class="flex flex-wrap gap-2">
+            <span *ngFor="let tech of p.tech"
+                  class="px-3 py-1 bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-mono rounded-full">
+              {{ tech }}
+            </span>
+          </div>
+
+          <div class="flex gap-4 text-sm">
+            <a *ngIf="p.links.live" [href]="p.links.live" target="_blank"
+               class="text-emerald-600 dark:text-emerald-400 hover:underline">Live Demo</a>
+            <a *ngIf="p.links.github && p.links.github !== 'private'" [href]="p.links.github" target="_blank"
+               class="text-emerald-600 dark:text-emerald-400 hover:underline">GitHub</a>
+            <span *ngIf="p.links.github === 'private'" class="text-gray-500 dark:text-gray-400 text-xs italic">Classified</span>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </div>
   </div>
-</div>
 </section>
