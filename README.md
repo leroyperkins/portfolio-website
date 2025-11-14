@@ -130,4 +130,4 @@ For inquiries or collaboration, reach out to me:
 - GitHub: [leroyperkins](https://github.com/leroyperkins)
 - LinkedIn: [carsonturner02](https://linkedin.com/in/carsonturner02)
 
-Built with precision by Carson Turner, Senior Software Architect. © 2025 Carson Turner. All rights reserved.
+© 2025 Carson Turner. All rights reserved.
