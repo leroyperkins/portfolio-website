@@ -10,7 +10,9 @@ import { ResumeService } from '../../../services/resume/resume.service';
 })
   export class ContactComponent {
     submit() {
-  throw new Error('Method not implemented.');
+    // TODO: Implement form submission logic (e.g., via HttpClient to an API)
+    console.log('Form submitted!');  // Placeholder
+    alert('Message sent successfully!');  // For demo
   }
   private resumeService = inject(ResumeService);
   data = this.resumeService.data;

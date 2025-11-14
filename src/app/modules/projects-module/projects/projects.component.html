@@ -1,9 +1,9 @@
 <!-- src/app/components/projects/projects.component.html -->
-<div class="max-w-7xl mx-auto p-6 md:p-10 bg-white dark:bg-gray-900">
+<section class="py-6">
+<div class="max-w-7xl mx-auto p-6 md:p-10">
   <h1 class="text-4xl md:text-5xl font-bold text-center mb-16 text-gray-900 dark:text-gray-100 tracking-tight">
     Mission-Critical Projects
   </h1>
-
   <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
     <article *ngFor="let p of data.projects"
              class="bg-gray-50 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-600 overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-emerald-500/30 dark:hover:shadow-emerald-400/30 transition-all group">
@@ -39,3 +39,4 @@
     </article>
   </div>
 </div>
+</section>
