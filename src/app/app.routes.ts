@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
@@ -25,9 +24,3 @@ export const routes: Routes = [
   { path: '', redirectTo: '/about', pathMatch: 'full' },
   { path: '**', redirectTo: '/about' }
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
