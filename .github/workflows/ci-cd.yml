@@ -10,6 +10,10 @@ on:
       - develop
       - main
 
+permissions:
+  contents: read
+  deployments: write
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
@@ -26,14 +30,23 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
 
+      - name: Cache node_modules
+        id: cache-npm
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm-
+
       - name: Install dependencies
+        if: steps.cache-npm.outputs.cache-hit != 'true'  # Install only if cache miss
         run: npm ci
 
       - name: Lint
         run: npm run lint
 
       - name: Run tests
-        run: npm run test -- --watch=false --browsers=ChromeHeadless
+        run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
 
       - name: Inject Secrets and Build Angular App
         run: |
@@ -50,9 +63,9 @@ jobs:
             sed -i "s/REPLACE_EMAILJS_TEMPLATE_ID_DEVELOP/${{ secrets.EMAILJS_TEMPLATE_ID_DEVELOP }}/g" $ENV_FILE
             sed -i "s/REPLACE_EMAILJS_USER_ID_DEVELOP/${{ secrets.EMAILJS_USER_ID_DEVELOP }}/g" $ENV_FILE
           else
-            CONFIG="development"  # For PRs, use default dev config (no secrets)
+            CONFIG="development"  # For PRs; assume angular.json has this config
           fi
-          npm run build -- --configuration $CONFIG
+          npm run build -- --configuration=$CONFIG  # Fixed flag syntax
 
       - name: Upload artifact
         if: success()
@@ -65,9 +78,10 @@ jobs:
   deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
-    environment:  # Protect prod with approvals
-      name: ${{ github.ref == 'refs/heads/main' && 'production' || 'develop' }}  # Conditional environment
-      url: ${{ github.ref == 'refs/heads/main' && 'https://your-prod-url.com' || 'https://your-develop-url.com' }}  # Optional: Links to deployed site
+    if: github.event_name == 'push'  # Skip deploys on PRs
+    environment:
+      name: ${{ github.ref == 'refs/heads/main' && 'production' || 'develop' }}
+      url: ${{ github.ref == 'refs/heads/main' && 'https://your-prod-url.com' || 'https://your-develop-url.com' }}
 
     steps:
       - name: Download built artifact
@@ -77,18 +91,23 @@ jobs:
           path: dist/portfolio-website/browser
 
       - name: List downloaded files (debug)
-        run: ls -la dist/portfolio-website/browser     
+        if: always()  # Run even on failure for better debugging
+        run: ls -la dist/portfolio-website/browser
 
       - name: Deploy to Production
         if: github.ref == 'refs/heads/main'
         run: |
           echo "Deploying to PRODUCTION..."
-          # Example for GitHub Pages; replace with Vercel/Netlify if preferred
-          npx angular-cli-ghpages --dir=dist/portfolio-website/browser --branch=gh-pages  # Requires angular-cli-ghpages; add to package.json if needed
+          # GitHub Pages example (ensure 'angular-cli-ghpages' in devDependencies)
+          npx angular-cli-ghpages --dir=dist/portfolio-website/browser --branch=gh-pages --no-silent
+          # Alternative: Vercel (uncomment if switching; add VERCEL_TOKEN secret)
+          # npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --scope your-team --yes
 
       - name: Deploy to Develop
         if: github.ref == 'refs/heads/develop'
         run: |
           echo "Deploying to DEVELOP..."
-          # Example: Deploy to a develop branch or separate host
-          npx angular-cli-ghpages --dir=dist/portfolio-website/browser --branch=develop-pages  # Or use Vercel CLI with secrets
+          # GitHub Pages for staging (separate branch)
+          npx angular-cli-ghpages --dir=dist/portfolio-website/browser --branch=develop-pages --no-silent
+          # Alternative: Vercel preview (uncomment if switching)
+          # npx vercel --token ${{ secrets.VERCEL_TOKEN }} --scope your-team --yes

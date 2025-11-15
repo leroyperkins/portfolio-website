@@ -21,14 +21,14 @@ export class ContactComponent implements OnInit {
 
   ngOnInit(): void {
     this.contactForm = this.fb.group({
-      firstName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s\-']{2,50}$/)]],
+      name: ['', [Validators.required, Validators.pattern(/^[a-zA-Z\s\-']{2,50}$/)]],
       company: [''],
       email: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
       subject: ['', Validators.required],
       message: ['', [Validators.required, Validators.maxLength(this.maxMessageLength)]],
     });
 
-    this.contactForm.get('message')?.valueChanges.subscribe(value => {
+    this.contactForm.get('message')?.valueChanges.subscribe((value: string) => {
       this.messageLength = value?.length || 0;
     });
   }
@@ -40,7 +40,7 @@ export class ContactComponent implements OnInit {
           environment.emailjs.serviceId,
           environment.emailjs.templateId,
           this.contactForm.value,
-          environment.emailjs.userId
+          { publicKey: environment.emailjs.userId }
         );
         console.log('Email sent successfully:', response.status, response.text);
         this.toastr.success('Your message has been sent successfully!', 'Success');
