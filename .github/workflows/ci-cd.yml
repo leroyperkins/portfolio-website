@@ -98,16 +98,16 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           echo "Deploying to PRODUCTION..."
-          # GitHub Pages example (ensure 'angular-cli-ghpages' in devDependencies)
-          npx angular-cli-ghpages --dir=dist/portfolio-website/browser --branch=gh-pages --repo=https://github.com/${{ github.repository }}.git --no-silent
-          # Alternative: Vercel (uncomment if switching; add VERCEL_TOKEN secret)
-          # npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --scope your-team --yes
+          # GitHub Pages fallback (with fix for repo config; use only if transitioning)
+          # npx angular-cli-ghpages --dir=dist/portfolio-website/browser --branch=gh-pages --repo=https://github.com/${{ github.repository }}.git --no-silent
+          # Vercel deploy (primary; uses token for auth)
+          npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --scope your-vercel-scope --yes  # Replace your-vercel-scope with your Vercel username/team
 
       - name: Deploy to Develop
         if: github.ref == 'refs/heads/develop'
         run: |
           echo "Deploying to DEVELOP..."
-          # GitHub Pages for staging (separate branch)
-          npx angular-cli-ghpages --dir=dist/portfolio-website/browser --branch=develop-pages --repo=https://github.com/${{ github.repository }}.git --no-silent
-          # Alternative: Vercel preview (uncomment if switching)
-          # npx vercel --token ${{ secrets.VERCEL_TOKEN }} --scope your-team --yes
+          # GitHub Pages fallback (with fix)
+          # npx angular-cli-ghpages --dir=dist/portfolio-website/browser --branch=develop-pages --repo=https://github.com/${{ github.repository }}.git --no-silent
+          # Vercel preview deploy
+          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --scope your-vercel-scope --yes
