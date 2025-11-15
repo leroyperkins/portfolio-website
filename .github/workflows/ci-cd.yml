@@ -98,10 +98,10 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           echo "Deploying to PRODUCTION..."
-          npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
+          npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes --prebuilt
 
       - name: Deploy to Develop
         if: github.ref == 'refs/heads/develop'
         run: |
           echo "Deploying to DEVELOP..."
-          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --yes
+          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --yes --prebuilt
