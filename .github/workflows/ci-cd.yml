@@ -48,7 +48,7 @@ jobs:
       - name: Run tests
         run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
 
-  deploy:
+  build-and-deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
@@ -68,25 +68,34 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        
-      - name: Deploy to PRODUCTION
-        if: github.ref == 'refs/heads/main'
-        run: |
-          echo "Deploying to PRODUCTION..."
-          npx vercel deploy --prod \
-            --token ${{ secrets.VERCEL_TOKEN }} \
-            --env EMAILJS_SERVICE_ID=${{ secrets.EMAILJS_SERVICE_ID }} \
-            --env EMAILJS_TEMPLATE_ID=${{ secrets.EMAILJS_TEMPLATE_ID }} \
-            --env EMAILJS_PUBLIC_KEY=${{ secrets.EMAILJS_PUBLIC_KEY }} \
-            --yes
 
-      - name: Deploy to DEVELOP
-        if: github.ref == 'refs/heads/develop'
+      - name: Replace Angular environment placeholders
         run: |
-          echo "Deploying to DEVELOP..."
-          npx vercel deploy \
-            --token ${{ secrets.VERCEL_TOKEN }} \
-            --env EMAILJS_SERVICE_ID=${{ secrets.EMAILJS_SERVICE_ID_DEV }} \
-            --env EMAILJS_TEMPLATE_ID=${{ secrets.EMAILJS_TEMPLATE_ID_DEV }} \
-            --env EMAILJS_PUBLIC_KEY=${{ secrets.EMAILJS_PUBLIC_KEY_DEV }} \
-            --yes
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            # Production branch
+            sed -i "s|__EMAILJS_SERVICE_ID__|${{ secrets.EMAILJS_SERVICE_ID }}|g" src/environments/environment.prod.ts
+            sed -i "s|__EMAILJS_TEMPLATE_ID__|${{ secrets.EMAILJS_TEMPLATE_ID }}|g" src/environments/environment.prod.ts
+            sed -i "s|__EMAILJS_PUBLIC_KEY__|${{ secrets.EMAILJS_PUBLIC_KEY }}|g" src/environments/environment.prod.ts
+          else
+            # Develop branch
+            sed -i "s|__EMAILJS_SERVICE_ID__|${{ secrets.EMAILJS_SERVICE_ID_DEV }}|g" src/environments/environment.ts
+            sed -i "s|__EMAILJS_TEMPLATE_ID__|${{ secrets.EMAILJS_TEMPLATE_ID_DEV }}|g" src/environments/environment.ts
+            sed -i "s|__EMAILJS_PUBLIC_KEY__|${{ secrets.EMAILJS_PUBLIC_KEY_DEV }}|g" src/environments/environment.ts
+          fi
+
+      - name: Build Angular app
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            npm run build -- --configuration production
+          else
+            npm run build -- --configuration develop
+          fi
+
+      - name: Deploy to Vercel
+        run: |
+          echo "Deploying..."
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            npx vercel deploy --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
+          else
+            npx vercel deploy --token ${{ secrets.VERCEL_TOKEN }} --yes
+          fi
