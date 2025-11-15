@@ -1,20 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
-
-export interface AppConfig {
-  emailjs: {
-    serviceId: string;
-    templateId: string;
-    publicKey: string;
-  };
-}
+import { AppConfig } from './app-config.model';
 
 @Injectable({ providedIn: 'root' })
 export class AppConfigService {
+  private http = inject(HttpClient);
   private config!: AppConfig;
-
-  constructor(private http: HttpClient) {}
 
   load(): Promise<void> {
     return firstValueFrom(
