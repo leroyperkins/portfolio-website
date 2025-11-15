@@ -26,6 +26,7 @@ export interface ResumeData {
     impact: string;
     metrics?: string;
     tech: string[];
+    image?: string;
     links: { github?: string; live?: string };
   }[];
   education: { school: string; degree: string; graduation: string };
@@ -51,7 +52,7 @@ export const RESUME_DATA: ResumeData = {
       ".NET", "Spring Boot", "NGRX Store", "Cypress", "CI/CD (GitLab)", "OpenShift", "Redux"
     ],
     tools: [
-      "GitLab", "Jira", "Confluence", "Bitbucket", "OpenShift", "Docker"
+      "GitLab", "Jira", "Confluence", "Bitbucket", "OpenShift", "Docker", "MS Office Suite"
     ],
     concepts: [
       "Full-Stack Development",
@@ -108,26 +109,29 @@ export const RESUME_DATA: ResumeData = {
     {
       title: "Project F.R.E.A.K. - Senior Capstone Project",
       role: "Field-ready Rocket Evaluation and Analytics Kit",
-      impact: "Worked in team of 6 students to design, test, and deliver software solution to Mizzou Space Program customer",
-      metrics: "Reduced data dump time from 4+ hrs to 5 mins",
+      impact: "Worked in team of 6 students to design, test, and deliver software solution to Mizzou Space Program customer. Did application planning/design for 1 semester, then agile development and implementation for 1 semester.",
+      metrics: "Reduced data dump time from 4+ hrs to <5 mins",
       tech: ["C#", "LabJack T4", "Live Graphs", "Safety Checks", "Sensor Health"],
-      links: {}
+      links: {},
+      image: 'assets/project-photos/project-freak/project-freak.png'
     },
     {
       title: "L1 High Powered Rocket - Mizzou Space Program",
       role: "Designed, constructed, and tested L1 rocket to gain Tripoli L1 rocketry certification",
       impact: "Used machine tools, techniques and software to create rocket to pass key requirements for L1 flight",
       metrics: "Selective Process within club as an achievement for active participation, attendance, and contribution to projects/events",
-      tech: ["Arduino", "Geiger Counter", "High-altitude Balloon"],
-      links: {}
+      tech: ["Amateur Rocketry", "Rocket Design", "Machine Tools", "3d Part Design"],
+      links: {},
+      image: 'assets/project-photos/level1-cert/level1-cert.png'
     },
     {
       title: "High Altitude Balloon - Mizzou Space Program",
       role: "High-altitude balloon traveling to ~75k feet to gather basic sensor data. Built from Arduino, included temperature, humidity, pressure and Geiger counter sensors.",
       impact: "Led development of sensor hardware within new-member team. Coded and tested to ensure sensors were functional prior to balloon launch.",
       metrics: "Achieved goal of recovering Balloon data, predictions prior to launch proved correct with recovery and processing of sensor data",
-      tech: ["Arduino", "Geiger Counter"],
-      links: {}
+      tech: ["Arduino", "Geiger Counter", "Data Dumps", "Temperature Prediction", "Barometer Data"],
+      links: {},
+      image: 'assets/project-photos/space-balloon/space-balloon.png'
     }
   ],
 

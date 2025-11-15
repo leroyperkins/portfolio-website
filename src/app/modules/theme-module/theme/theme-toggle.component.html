@@ -1,13 +1,13 @@
 <!-- src/app/components/theme-toggle/theme-toggle.component.html -->
 <button
   (click)="themeService.toggle()"
-  class="p-2 md:p-3 rounded-full bg-gray-50/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-600 hover:border-emerald-600 dark:hover:border-emerald-400 transition"
+  class="p-1 md:p-2 rounded-full bg-gray-50/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-600 hover:border-emerald-600 dark:hover:border-emerald-400 transition"
   title="Toggle Theme"
 >
   <svg
     *ngIf="themeService.isDark(); else sun"
     xmlns="http://www.w3.org/2000/svg"
-    class="h-6 w-6 text-emerald-600 dark:text-emerald-400"
+    class="h-5 w-5 text-emerald-700 dark:text-emerald-300 opacity-90"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
@@ -15,14 +15,14 @@
     <path
       stroke-linecap="round"
       stroke-linejoin="round"
-      stroke-width="2"
+      stroke-width="2.5"
       d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
     />
   </svg>
   <ng-template #sun>
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      class="h-6 w-6 text-emerald-600 dark:text-emerald-400"
+      class="h-5 w-5 text-emerald-700 dark:text-emerald-300 opacity-90"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -30,8 +30,8 @@
       <path
         stroke-linecap="round"
         stroke-linejoin="round"
-        stroke-width="2"
-        d="M12 3v1m0 16v1m8.485-8.485l-.707.707M5.636 5.636l-.707.707m12.02 0l-.707-.707M5.636 18.364l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+        stroke-width="2.5"
+        d="M12 3v1m0 16v1m8.485-8.485l-.707.707M5.636 5.636l-.707.707m12.02 0l-.707-.707M5.636 18.364l-.707-.707M15 12a3 3 0 11-6 0 3 3 0 016 0zM12 8v.01M12 16v.01M4 12h.01M20 12h.01M5.636 5.636l.707.707M18.364 18.364l-.707.707M5.636 18.364l.707-.707M18.364 5.636l-.707-.707"
       />
     </svg>
   </ng-template>
