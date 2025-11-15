@@ -39,7 +39,7 @@ jobs:
           restore-keys: ${{ runner.os }}-npm-
 
       - name: Install dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'  # Install only if cache miss
+        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Lint
@@ -63,9 +63,9 @@ jobs:
             sed -i "s/REPLACE_EMAILJS_TEMPLATE_ID_DEVELOP/${{ secrets.EMAILJS_TEMPLATE_ID_DEVELOP }}/g" $ENV_FILE
             sed -i "s/REPLACE_EMAILJS_USER_ID_DEVELOP/${{ secrets.EMAILJS_USER_ID_DEVELOP }}/g" $ENV_FILE
           else
-            CONFIG="development"  # For PRs; assume angular.json has this config
+            CONFIG="development"
           fi
-          npm run build -- --configuration=$CONFIG  # Fixed flag syntax
+          npm run build -- --configuration=$CONFIG
 
       - name: Upload artifact
         if: success()
@@ -78,10 +78,10 @@ jobs:
   deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'  # Skip deploys on PRs
+    if: github.event_name == 'push'
     environment:
       name: ${{ github.ref == 'refs/heads/main' && 'production' || 'develop' }}
-      url: ${{ github.ref == 'refs/heads/main' && 'https://your-prod-url.com' || 'https://your-develop-url.com' }}
+      url: ${{ github.ref == 'refs/heads/main' && 'https://yourdomain.com' || 'https://portfolio-website-alpha-beige-16.vercel.app/' }}
 
     steps:
       - name: Download built artifact
@@ -91,23 +91,17 @@ jobs:
           path: dist/portfolio-website/browser
 
       - name: List downloaded files (debug)
-        if: always()  # Run even on failure for better debugging
+        if: always()
         run: ls -la dist/portfolio-website/browser
 
       - name: Deploy to Production
         if: github.ref == 'refs/heads/main'
         run: |
           echo "Deploying to PRODUCTION..."
-          # GitHub Pages example (ensure 'angular-cli-ghpages' in devDependencies)
-          npx angular-cli-ghpages --dir=dist/portfolio-website/browser --branch=gh-pages --repo=https://github.com/${{ github.repository }}.git --no-silent
-          # Alternative: Vercel (uncomment if switching; add VERCEL_TOKEN secret)
-          # npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --scope your-team --yes
+          npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --scope leroyperkins --yes
 
       - name: Deploy to Develop
         if: github.ref == 'refs/heads/develop'
         run: |
           echo "Deploying to DEVELOP..."
-          # GitHub Pages for staging (separate branch)
-          npx angular-cli-ghpages --dir=dist/portfolio-website/browser --branch=develop-pages --repo=https://github.com/${{ github.repository }}.git --no-silent
-          # Alternative: Vercel preview (uncomment if switching)
-          # npx vercel --token ${{ secrets.VERCEL_TOKEN }} --scope your-team --yes
+          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --scope leroyperkins --yes 
