@@ -99,7 +99,7 @@ jobs:
         run: |
           echo "Deploying to PRODUCTION..."
           # GitHub Pages example (ensure 'angular-cli-ghpages' in devDependencies)
-          npx angular-cli-ghpages --dir=dist/portfolio-website/browser --branch=gh-pages --no-silent
+          npx angular-cli-ghpages --dir=dist/portfolio-website/browser --branch=gh-pages --repo=https://github.com/${{ github.repository }}.git --no-silent
           # Alternative: Vercel (uncomment if switching; add VERCEL_TOKEN secret)
           # npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --scope your-team --yes
 
@@ -108,6 +108,6 @@ jobs:
         run: |
           echo "Deploying to DEVELOP..."
           # GitHub Pages for staging (separate branch)
-          npx angular-cli-ghpages --dir=dist/portfolio-website/browser --branch=develop-pages --no-silent
+          npx angular-cli-ghpages --dir=dist/portfolio-website/browser --branch=develop-pages --repo=https://github.com/${{ github.repository }}.git --no-silent
           # Alternative: Vercel preview (uncomment if switching)
           # npx vercel --token ${{ secrets.VERCEL_TOKEN }} --scope your-team --yes
