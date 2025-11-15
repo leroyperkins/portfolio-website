@@ -1,18 +1,30 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+export interface AppConfig {
+  emailjs: {
+    serviceId: string;
+    templateId: string;
+    publicKey: string;
+  };
+}
+
+@Injectable({ providedIn: 'root' })
 export class AppConfigService {
-  private config: any;
+  private config!: AppConfig;
 
-  load() {
-    return fetch('/assets/config.json')
-      .then(response => response.json())
-      .then(json => this.config = json);
+  constructor(private http: HttpClient) {}
+
+  load(): Promise<void> {
+    return firstValueFrom(
+      this.http.get<AppConfig>('/assets/environment.json')
+    ).then(cfg => {
+      this.config = cfg;
+    });
   }
 
-  get(key: string) {
-    return this.config[key];
+  getConfig(): AppConfig {
+    return this.config;
   }
 }
