@@ -48,33 +48,6 @@ jobs:
       - name: Run tests
         run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
 
-      - name: Inject Secrets and Build Angular App
-        run: |
-          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-            ENV_FILE="src/environments/environment.prod.ts"
-            CONFIG="production"
-            sed -i "s/REPLACE_EMAILJS_SERVICE_ID_PROD/${{ secrets.EMAILJS_SERVICE_ID_PROD }}/g" $ENV_FILE
-            sed -i "s/REPLACE_EMAILJS_TEMPLATE_ID_PROD/${{ secrets.EMAILJS_TEMPLATE_ID_PROD }}/g" $ENV_FILE
-            sed -i "s/REPLACE_EMAILJS_USER_ID_PROD/${{ secrets.EMAILJS_USER_ID_PROD }}/g" $ENV_FILE
-          elif [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
-            ENV_FILE="src/environments/environment.develop.ts"
-            CONFIG="develop"
-            sed -i "s/REPLACE_EMAILJS_SERVICE_ID_DEVELOP/${{ secrets.EMAILJS_SERVICE_ID_DEVELOP }}/g" $ENV_FILE
-            sed -i "s/REPLACE_EMAILJS_TEMPLATE_ID_DEVELOP/${{ secrets.EMAILJS_TEMPLATE_ID_DEVELOP }}/g" $ENV_FILE
-            sed -i "s/REPLACE_EMAILJS_USER_ID_DEVELOP/${{ secrets.EMAILJS_USER_ID_DEVELOP }}/g" $ENV_FILE
-          else
-            CONFIG="development"
-          fi
-          npm run build -- --configuration=$CONFIG
-
-      - name: Upload artifact
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist/portfolio-website/browser
-          retention-days: 5
-
   deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
@@ -84,24 +57,26 @@ jobs:
       url: ${{ github.ref == 'refs/heads/main' && 'https://yourdomain.com' || 'https://yourdomain-preview.vercel.app' }}
 
     steps:
-      - name: Download built artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/portfolio-website/browser
+      - name: Checkout code  # Needed for Vercel to access source
+        uses: actions/checkout@v4
 
-      - name: List downloaded files (debug)
-        if: always()
-        run: ls -la dist/portfolio-website/browser
+      - name: Setup Node.js  # For Vercel CLI and deps
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Deploy to Production
         if: github.ref == 'refs/heads/main'
         run: |
           echo "Deploying to PRODUCTION..."
-          npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes --prebuilt
+          npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
 
       - name: Deploy to Develop
         if: github.ref == 'refs/heads/develop'
         run: |
           echo "Deploying to DEVELOP..."
-          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --yes --prebuilt
+          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --yes
