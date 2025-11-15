@@ -57,26 +57,36 @@ jobs:
       url: ${{ github.ref == 'refs/heads/main' && 'https://yourdomain.com' || 'https://yourdomain-preview.vercel.app' }}
 
     steps:
-      - name: Checkout code  # Needed for Vercel to access source
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js  # For Vercel CLI and deps
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: 20.x
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Deploy to Production
+      - name: Deploy to PRODUCTION
         if: github.ref == 'refs/heads/main'
         run: |
           echo "Deploying to PRODUCTION..."
-          npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
+          npx vercel --prod \
+            --token ${{ secrets.VERCEL_TOKEN }} \
+            --env EMAILJS_SERVICE_ID=${{ secrets.EMAILJS_SERVICE_ID }} \
+            --env EMAILJS_TEMPLATE_ID=${{ secrets.EMAILJS_TEMPLATE_ID }} \
+            --env EMAILJS_PUBLIC_KEY=${{ secrets.EMAILJS_PUBLIC_KEY }} \
+            --yes
 
-      - name: Deploy to Develop
+      - name: Deploy to DEVELOP
         if: github.ref == 'refs/heads/develop'
         run: |
           echo "Deploying to DEVELOP..."
-          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --yes
+          npx vercel \
+            --token ${{ secrets.VERCEL_TOKEN }} \
+            --env EMAILJS_SERVICE_ID=${{ secrets.EMAILJS_SERVICE_ID_DEV }} \
+            --env EMAILJS_TEMPLATE_ID=${{ secrets.EMAILJS_TEMPLATE_ID_DEV }} \
+            --env EMAILJS_PUBLIC_KEY=${{ secrets.EMAILJS_PUBLIC_KEY_DEV }} \
+            --yes
