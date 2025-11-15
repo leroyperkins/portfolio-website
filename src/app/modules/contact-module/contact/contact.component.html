@@ -1,30 +1,81 @@
-<!-- src/app/components/contact/contact.component.html -->
-<section class="py-30">
+<section class="py-14">
   <div class="max-w-6xl mx-auto px-6">
-    <h2 class="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-gray-100 tracking-tight">
+    <h2 class="text-5xl md:text-6xl font-bold text-center mb-16 text-gray-900 dark:text-gray-100 tracking-tight">
       Contact Me
     </h2>
-
-    <div class="max-w-md mx-auto p-8 bg-gray-50 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-gray-600 shadow-2xl">
-      <form class="space-y-7">
-        <input 
-          type="text" 
-          placeholder="Your Name"
-          class="w-full px-5 py-3 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-600 dark:focus:ring-emerald-400 focus:border-emerald-600 dark:focus:border-emerald-400 transition placeholder:font-light">
-
-        <input 
-          type="email" 
-          placeholder="Your Email"
-          class="w-full px-5 py-3 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-600 dark:focus:ring-emerald-400 focus:border-emerald-600 dark:focus:border-emerald-400 transition placeholder:font-light">
-
-        <textarea 
-          placeholder="Your Message" 
-          rows="5"
-          class="w-full px-5 py-3 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-600 dark:focus:ring-emerald-400 focus:border-emerald-600 dark:focus:border-emerald-400 transition placeholder:font-light resize-none">
-        </textarea>
-
-        <app-button variant="primary" (checkClick)="submit()">Submit</app-button>
+    <div class="max-w-md mx-auto p-4 pl-6 bg-gray-50 dark:bg-gray-800/60 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-gray-600 shadow-2xl">
+      <form [formGroup]="contactForm" class="space-y-3">
+        <div class="relative">
+          <input formControlName="name" id="name" type="text" autocomplete="off"
+                 [ngClass]="{'border-red-600 dark:border-red-500': contactForm.get('name')?.invalid && contactForm.get('name')?.touched, 
+                             'border-gray-200 dark:border-gray-600': !contactForm.get('name')?.invalid || !contactForm.get('name')?.touched}"
+                 class="peer w-full px-4 pt-5 pb-2 bg-gray-100 dark:bg-gray-700 rounded-xl text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-600 dark:focus:ring-emerald-400 transition placeholder-transparent">
+          <label for="name" class="pointer-events-none absolute left-4 top-3 text-gray-500 dark:text-gray-400 font-light transition-all duration-200 z-10 
+                  peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 dark:peer-placeholder-shown:text-gray-400
+                  peer-focus:top-0.5 peer-focus:text-xs peer-focus:text-emerald-600 dark:peer-focus:text-emerald-400
+                  peer-[&:not(:placeholder-shown)]:top-0.5 peer-[&:not(:placeholder-shown)]:text-xs peer-[&:not(:placeholder-shown)]:text-emerald-600 dark:peer-[&:not(:placeholder-shown)]:text-emerald-400">
+            Name (Required)
+          </label>
+          <div class="h-3"></div>
+        </div>
+        <div class="relative">
+          <input formControlName="company" id="company" type="text" autocomplete="off"
+                 class="peer w-full px-4 pt-5 pb-2 bg-gray-100 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-600 dark:focus:ring-emerald-400 transition placeholder-transparent">
+          <label for="company" class="pointer-events-none absolute left-4 top-3 text-gray-500 dark:text-gray-400 font-light transition-all duration-200 z-10 
+                  peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 dark:peer-placeholder-shown:text-gray-400
+                  peer-focus:top-0.5 peer-focus:text-xs peer-focus:text-emerald-600 dark:peer-focus:text-emerald-400
+                  peer-[&:not(:placeholder-shown)]:top-0.5 peer-[&:not(:placeholder-shown)]:text-xs peer-[&:not(:placeholder-shown)]:text-emerald-600 dark:peer-[&:not(:placeholder-shown)]:text-emerald-400">
+            Company/Affiliation (Optional)
+          </label>
+          <div class="h-3"></div>
+        </div>
+        <div class="relative">
+          <input formControlName="email" id="email" type="email" autocomplete="off"
+                 [ngClass]="{'border-red-600 dark:border-red-500': contactForm.get('email')?.invalid && contactForm.get('email')?.touched, 
+                             'border-gray-200 dark:border-gray-600': !contactForm.get('email')?.invalid || !contactForm.get('email')?.touched}"
+                 class="peer w-full px-4 pt-5 pb-2 bg-gray-100 dark:bg-gray-700 rounded-xl text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-600 dark:focus:ring-emerald-400 transition placeholder-transparent">
+          <label for="email" class="pointer-events-none absolute left-4 top-3 text-gray-500 dark:text-gray-400 font-light transition-all duration-200 z-10 
+                  peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 dark:peer-placeholder-shown:text-gray-400
+                  peer-focus:top-0.5 peer-focus:text-xs peer-focus:text-emerald-600 dark:peer-focus:text-emerald-400
+                  peer-[&:not(:placeholder-shown)]:top-0.5 peer-[&:not(:placeholder-shown)]:text-xs peer-[&:not(:placeholder-shown)]:text-emerald-600 dark:peer-[&:not(:placeholder-shown)]:text-emerald-400">
+            Email (Required)
+          </label>
+          <div class="h-3"></div>
+        </div>
+        <div class="relative">
+          <input formControlName="subject" id="subject" type="text" autocomplete="off" 
+                 [ngClass]="{'border-red-600 dark:border-red-500': contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched, 
+                             'border-gray-200 dark:border-gray-600': !contactForm.get('subject')?.invalid || !contactForm.get('subject')?.touched}"
+                 class="peer w-full px-4 pt-5 pb-2 bg-gray-100 dark:bg-gray-700 rounded-xl text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-600 dark:focus:ring-emerald-400 transition placeholder-transparent">
+          <label for="subject" class="pointer-events-none absolute left-4 top-3 text-gray-500 dark:text-gray-400 font-light transition-all duration-200 z-10 
+                  peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 dark:peer-placeholder-shown:text-gray-400
+                  peer-focus:top-0.5 peer-focus:text-xs peer-focus:text-emerald-600 dark:peer-focus:text-emerald-400
+                  peer-[&:not(:placeholder-shown)]:top-0.5 peer-[&:not(:placeholder-shown)]:text-xs peer-[&:not(:placeholder-shown)]:text-emerald-600 dark:peer-[&:not(:placeholder-shown)]:text-emerald-400">
+            Subject (Required)
+          </label>
+          <div class="h-3"></div>
+        </div>
+        <div class="relative">
+          <textarea formControlName="message" id="message" rows="5" autocomplete="off" 
+                    [ngClass]="{'border-red-600 dark:border-red-500': contactForm.get('message')?.invalid && contactForm.get('message')?.touched, 
+                                'border-gray-200 dark:border-gray-600': !contactForm.get('message')?.invalid || !contactForm.get('message')?.touched}"
+                    class="peer w-full px-4 pt-5 pb-5 bg-gray-100 dark:bg-gray-700 rounded-xl text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-600 dark:focus:ring-emerald-400 transition resize-none placeholder-transparent"></textarea>
+          <label for="message" class="pointer-events-none absolute left-4 top-3 text-gray-500 dark:text-gray-400 font-light transition-all duration-200 z-10 
+                  peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 dark:peer-placeholder-shown:text-gray-400
+                  peer-focus:top-0.5 peer-focus:text-xs peer-focus:text-emerald-600 dark:peer-focus:text-emerald-400
+                  peer-[&:not(:placeholder-shown)]:top-0.5 peer-[&:not(:placeholder-shown)]:text-xs peer-[&:not(:placeholder-shown)]:text-emerald-600 dark:peer-[&:not(:placeholder-shown)]:text-emerald-400">
+            Your Message (Required, max 500 chars)
+          </label>
+          <div class="absolute bottom right-3 text-xs text-gray-500 dark:text-gray-400">
+            {{ messageLength }} / 500
+          </div>
+        </div>
+        <div class="h-3"></div>
+        <app-button variant="primary" (checkClick)="submit()" [disabled]="contactForm.invalid || contactForm.pristine">Submit</app-button>
       </form>
+      <p class="text-center mt-6 text-sm text-gray-600 dark:text-gray-300">
+        Prefer direct email? <a href="mailto:carson.turner@example.com" class="text-emerald-600 dark:text-emerald-400 hover:underline">Click here</a>.
+      </p>
     </div>
   </div>
 </section>

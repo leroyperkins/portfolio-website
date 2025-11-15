@@ -52,7 +52,7 @@ export const RESUME_DATA: ResumeData = {
       ".NET", "Spring Boot", "NGRX Store", "Cypress", "CI/CD (GitLab)", "OpenShift", "Redux"
     ],
     tools: [
-      "GitLab", "Jira", "Confluence", "Bitbucket", "OpenShift", "Docker"
+      "GitLab", "Jira", "Confluence", "Bitbucket", "OpenShift", "Docker", "MS Office Suite"
     ],
     concepts: [
       "Full-Stack Development",
