@@ -4,7 +4,7 @@ import { NgClass } from '@angular/common';
 import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 import { ToastrService } from 'ngx-toastr';
 import { ButtonComponent } from '../../../shared/layout/button/button.component';
-import { environment } from '../../../../environments/environment';
+import { AppConfigService } from 'src/app/config/app-config.service';
 
 @Component({
   selector: 'app-contact',
@@ -15,6 +15,7 @@ import { environment } from '../../../../environments/environment';
 export class ContactComponent implements OnInit {
   private fb = inject(FormBuilder);
   private toastr = inject(ToastrService);
+  private config = inject(AppConfigService);
   contactForm!: FormGroup;
   messageLength = 0;
   maxMessageLength = 500;
@@ -37,10 +38,10 @@ export class ContactComponent implements OnInit {
     if (this.contactForm.valid) {
       try {
         const response: EmailJSResponseStatus = await emailjs.send(
-          environment.emailjs.serviceId,
-          environment.emailjs.templateId,
+          this.config.get('emailjsServiceId'),
+          this.config.get('emailjsTemplateId'),
           this.contactForm.value,
-          { publicKey: environment.emailjs.userId }
+          { publicKey: this.config.get('emailjsPublicKey') }
         );
         console.log('Email sent successfully:', response.status, response.text);
         this.toastr.success('Your message has been sent successfully!', 'Success');
