@@ -81,7 +81,7 @@ jobs:
     if: github.event_name == 'push'
     environment:
       name: ${{ github.ref == 'refs/heads/main' && 'production' || 'develop' }}
-      url: ${{ github.ref == 'refs/heads/main' && 'https://yourdomain.com' || 'https://portfolio-website-alpha-beige-16.vercel.app/' }}
+      url: ${{ github.ref == 'refs/heads/main' && 'https://yourdomain.com' || 'https://yourdomain-preview.vercel.app' }}
 
     steps:
       - name: Download built artifact
@@ -98,10 +98,10 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           echo "Deploying to PRODUCTION..."
-          npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --scope leroyperkins --yes
+          npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
 
       - name: Deploy to Develop
         if: github.ref == 'refs/heads/develop'
         run: |
           echo "Deploying to DEVELOP..."
-          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --scope leroyperkins --yes 
+          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --yes
