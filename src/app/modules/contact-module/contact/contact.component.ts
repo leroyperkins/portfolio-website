@@ -4,7 +4,7 @@ import { NgClass } from '@angular/common';
 import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 import { ToastrService } from 'ngx-toastr';
 import { ButtonComponent } from '../../../shared/layout/button/button.component';
-import { environment } from '../../../../environments/environment';
+import { AppConfigService } from 'src/app/config/app-config.service';
 
 @Component({
   selector: 'app-contact',
@@ -15,6 +15,8 @@ import { environment } from '../../../../environments/environment';
 export class ContactComponent implements OnInit {
   private fb = inject(FormBuilder);
   private toastr = inject(ToastrService);
+  private appConfig = inject(AppConfigService);
+
   contactForm!: FormGroup;
   messageLength = 0;
   maxMessageLength = 500;
@@ -34,24 +36,29 @@ export class ContactComponent implements OnInit {
   }
 
   async submit() {
-    if (this.contactForm.valid) {
-      try {
-        const response: EmailJSResponseStatus = await emailjs.send(
-          environment.emailjs.serviceId,
-          environment.emailjs.templateId,
-          this.contactForm.value,
-          { publicKey: environment.emailjs.userId }
-        );
-        console.log('Email sent successfully:', response.status, response.text);
-        this.toastr.success('Your message has been sent successfully!', 'Success');
-        this.contactForm.reset();
-      } catch (error) {
-        console.error('Email sending failed:', error);
-        this.toastr.error('Failed to send message. Please try again later.', 'Error');
-      }
-    } else {
+    if (!this.contactForm.valid) {
       this.contactForm.markAllAsTouched();
       this.toastr.warning('Please fill out all required fields correctly.', 'Form Incomplete');
+      return;
+    }
+
+    try {
+      const cfg = this.appConfig.getConfig(); // strongly typed
+
+      const response: EmailJSResponseStatus = await emailjs.send(
+        cfg.emailjs.serviceId,
+        cfg.emailjs.templateId,
+        this.contactForm.value,
+        { publicKey: cfg.emailjs.publicKey }
+      );
+
+      console.log('Email sent successfully:', response.status, response.text);
+      this.toastr.success('Your message has been sent successfully!', 'Success');
+      this.contactForm.reset();
+
+    } catch (error) {
+      console.error('Email sending failed:', error);
+      this.toastr.error('Failed to send message. Please try again later.', 'Error');
     }
   }
 }
