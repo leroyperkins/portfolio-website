@@ -70,7 +70,7 @@ jobs:
           EMAILJS_PUBLIC_KEY: ${{ secrets.EMAILJS_PUBLIC_KEY }}
 
       - name: Build Angular app
-        run: npm run build -- --configuration production --base-href=/portfolio-website/
+        run: npm run build -- --configuration production --base-href="/"
 
       - name: Add .nojekyll file
         run: touch ./dist/portfolio-website/browser/.nojekyll
