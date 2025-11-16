@@ -35,6 +35,8 @@ jobs:
   build-and-deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
+    env:
+      NODE_VERSION: 20.x
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -48,14 +50,18 @@ jobs:
           echo "Replacing EmailJS placeholders..."
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
             # Production
+            echo "Configuring for PRODUCTION"
             sed -i "s|__EMAILJS_SERVICE_ID__|${{ secrets.EMAILJS_SERVICE_ID }}|g" src/environments/environment.prod.ts
             sed -i "s|__EMAILJS_TEMPLATE_ID__|${{ secrets.EMAILJS_TEMPLATE_ID }}|g" src/environments/environment.prod.ts
             sed -i "s|__EMAILJS_PUBLIC_KEY__|${{ secrets.EMAILJS_PUBLIC_KEY }}|g" src/environments/environment.prod.ts
+            cat src/environments/environment.prod.ts
           else
             # Develop
-            sed -i "s|__EMAILJS_SERVICE_ID__|${{ secrets.EMAILJS_SERVICE_ID_DEV }}|g" src/environments/environment.ts
-            sed -i "s|__EMAILJS_TEMPLATE_ID__|${{ secrets.EMAILJS_TEMPLATE_ID_DEV }}|g" src/environments/environment.ts
-            sed -i "s|__EMAILJS_PUBLIC_KEY__|${{ secrets.EMAILJS_PUBLIC_KEY_DEV }}|g" src/environments/environment.ts
+            echo "Configuring for DEVELOP"
+            sed -i "s|REPLACE_EMAILJS_SERVICE_ID_DEVELOP|${{ secrets.EMAILJS_SERVICE_ID_DEV }}|g" src/environments/environment.develop.ts
+            sed -i "s|REPLACE_EMAILJS_TEMPLATE_ID_DEVELOP|${{ secrets.EMAILJS_TEMPLATE_ID_DEV }}|g" src/environments/environment.develop.ts
+            sed -i "s|REPLACE_EMAILJS_USER_ID_DEVELOP|${{ secrets.EMAILJS_PUBLIC_KEY_DEV }}|g" src/environments/environment.develop.ts
+            cat src/environments/environment.develop.ts
           fi
 
       - name: Build Angular app
@@ -67,9 +73,19 @@ jobs:
           fi
 
       - name: Deploy to Vercel
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: |
+          # Install Vercel CLI
+          npm install --global vercel@latest
+          
+          # Pull Vercel environment information
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+          
+          # Deploy based on branch
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            npx vercel deploy --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
+            vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --cwd ./dist/portfolio-website/browser
           else
-            npx vercel deploy --token ${{ secrets.VERCEL_TOKEN }} --yes
+            vercel deploy --token=${{ secrets.VERCEL_TOKEN }} --yes --cwd ./dist/portfolio-website/browser
           fi
