@@ -12,7 +12,8 @@ on:
 
 permissions:
   contents: read
-  deployments: write
+  pages: write
+  id-token: write
 
 jobs:
   build-and-test:
@@ -35,6 +36,7 @@ jobs:
   build-and-deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     env:
       NODE_VERSION: 20.x
     steps:
@@ -48,63 +50,33 @@ jobs:
       - name: Replace Angular environment placeholders
         run: |
           echo "Replacing EmailJS placeholders..."
-          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            # Production
-            echo "Configuring for PRODUCTION"
-            echo "Service ID length: ${#EMAILJS_SERVICE_ID}"
-            echo "Template ID length: ${#EMAILJS_TEMPLATE_ID}"
-            echo "Public Key length: ${#EMAILJS_PUBLIC_KEY}"
-            
-            sed -i 's/__EMAILJS_SERVICE_ID__/'"$EMAILJS_SERVICE_ID"'/g' src/environments/environment.prod.ts
-            sed -i 's/__EMAILJS_TEMPLATE_ID__/'"$EMAILJS_TEMPLATE_ID"'/g' src/environments/environment.prod.ts
-            sed -i 's/__EMAILJS_PUBLIC_KEY__/'"$EMAILJS_PUBLIC_KEY"'/g' src/environments/environment.prod.ts
-            
-            echo "=== Modified environment.prod.ts ==="
-            cat src/environments/environment.prod.ts
-          else
-            # Develop
-            echo "Configuring for DEVELOP"
-            sed -i 's/REPLACE_EMAILJS_SERVICE_ID_DEVELOP/'"$EMAILJS_SERVICE_ID_DEV"'/g' src/environments/environment.develop.ts
-            sed -i 's/REPLACE_EMAILJS_TEMPLATE_ID_DEVELOP/'"$EMAILJS_TEMPLATE_ID_DEV"'/g' src/environments/environment.develop.ts
-            sed -i 's/REPLACE_EMAILJS_USER_ID_DEVELOP/'"$EMAILJS_PUBLIC_KEY_DEV"'/g' src/environments/environment.develop.ts
-            
-            echo "=== Modified environment.develop.ts ==="
-            cat src/environments/environment.develop.ts
-          fi
+          echo "Configuring for PRODUCTION"
+          echo "Service ID length: ${#EMAILJS_SERVICE_ID}"
+          echo "Template ID length: ${#EMAILJS_TEMPLATE_ID}"
+          echo "Public Key length: ${#EMAILJS_PUBLIC_KEY}"
+          
+          sed -i 's/__EMAILJS_SERVICE_ID__/'"$EMAILJS_SERVICE_ID"'/g' src/environments/environment.prod.ts
+          sed -i 's/__EMAILJS_TEMPLATE_ID__/'"$EMAILJS_TEMPLATE_ID"'/g' src/environments/environment.prod.ts
+          sed -i 's/__EMAILJS_PUBLIC_KEY__/'"$EMAILJS_PUBLIC_KEY"'/g' src/environments/environment.prod.ts
+          
+          echo "=== Modified environment.prod.ts ==="
+          cat src/environments/environment.prod.ts
         env:
           EMAILJS_SERVICE_ID: ${{ secrets.EMAILJS_SERVICE_ID }}
           EMAILJS_TEMPLATE_ID: ${{ secrets.EMAILJS_TEMPLATE_ID }}
           EMAILJS_PUBLIC_KEY: ${{ secrets.EMAILJS_PUBLIC_KEY }}
-          EMAILJS_SERVICE_ID_DEV: ${{ secrets.EMAILJS_SERVICE_ID_DEV }}
-          EMAILJS_TEMPLATE_ID_DEV: ${{ secrets.EMAILJS_TEMPLATE_ID_DEV }}
-          EMAILJS_PUBLIC_KEY_DEV: ${{ secrets.EMAILJS_PUBLIC_KEY_DEV }}
 
       - name: Build Angular app
-        run: |
-          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            npm run build -- --configuration production
-          else
-            npm run build -- --configuration develop
-          fi
+        run: npm run build -- --configuration production --base-href=/
 
-      - name: Deploy to Vercel
-        env:
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: |
-          # Install Vercel CLI
-          npm install --global vercel@latest
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist/portfolio-website/browser'
           
-          # Pull Vercel environment information
-          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-          
-          # Copy build output to root for deployment
-          cp -r ./dist/portfolio-website/browser ./vercel-deploy
-          
-          # Deploy based on branch
-          cd ./vercel-deploy
-          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
-          else
-            vercel deploy --token=${{ secrets.VERCEL_TOKEN }} --yes
-          fi
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
