@@ -73,9 +73,19 @@ jobs:
           fi
 
       - name: Deploy to Vercel
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: |
+          # Install Vercel CLI
+          npm install --global vercel@latest
+          
+          # Pull Vercel environment information
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+          
+          # Deploy based on branch
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            npx vercel deploy --prod --token ${{ secrets.VERCEL_TOKEN }} --yes --prebuilt
+            vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --cwd ./dist/portfolio-website/browser
           else
-            npx vercel deploy --token ${{ secrets.VERCEL_TOKEN }} --yes --prebuilt
+            vercel deploy --token=${{ secrets.VERCEL_TOKEN }} --yes --cwd ./dist/portfolio-website/browser
           fi
