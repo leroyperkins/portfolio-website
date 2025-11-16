@@ -40,7 +40,7 @@ export class ContactComponent implements OnInit {
           environment.emailjs.serviceId,
           environment.emailjs.templateId,
           this.contactForm.value,
-          { publicKey: environment.emailjs.userId }
+          { publicKey: environment.emailjs.publicKey }
         );
         console.log('Email sent successfully:', response.status, response.text);
         this.toastr.success('Your message has been sent successfully!', 'Success');
