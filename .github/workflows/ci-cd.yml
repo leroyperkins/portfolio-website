@@ -7,8 +7,8 @@ on:
       - develop
   pull_request:
     branches:
-      - develop
       - main
+      - develop
 
 permissions:
   contents: read
@@ -19,65 +19,40 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_VERSION: 20.x
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
-
-      - name: Cache node_modules
-        id: cache-npm
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: ${{ runner.os }}-npm-
-
       - name: Install dependencies
-        if: steps.cache-npm.outputs.cache-hit != 'true'
         run: npm ci
-
       - name: Lint
         run: npm run lint
-
       - name: Run tests
         run: npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
 
   build-and-deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
-    environment:
-      name: ${{ github.ref == 'refs/heads/main' && 'production' || 'develop' }}
-      url: ${{ github.ref == 'refs/heads/main' && 'https://yourdomain.com' || 'https://yourdomain-preview.vercel.app' }}
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-
       - name: Install dependencies
         run: npm ci
 
       - name: Replace Angular environment placeholders
         run: |
+          echo "Replacing EmailJS placeholders..."
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            # Production branch
+            # Production
             sed -i "s|__EMAILJS_SERVICE_ID__|${{ secrets.EMAILJS_SERVICE_ID }}|g" src/environments/environment.prod.ts
             sed -i "s|__EMAILJS_TEMPLATE_ID__|${{ secrets.EMAILJS_TEMPLATE_ID }}|g" src/environments/environment.prod.ts
             sed -i "s|__EMAILJS_PUBLIC_KEY__|${{ secrets.EMAILJS_PUBLIC_KEY }}|g" src/environments/environment.prod.ts
           else
-            # Develop branch
+            # Develop
             sed -i "s|__EMAILJS_SERVICE_ID__|${{ secrets.EMAILJS_SERVICE_ID_DEV }}|g" src/environments/environment.ts
             sed -i "s|__EMAILJS_TEMPLATE_ID__|${{ secrets.EMAILJS_TEMPLATE_ID_DEV }}|g" src/environments/environment.ts
             sed -i "s|__EMAILJS_PUBLIC_KEY__|${{ secrets.EMAILJS_PUBLIC_KEY_DEV }}|g" src/environments/environment.ts
@@ -93,7 +68,6 @@ jobs:
 
       - name: Deploy to Vercel
         run: |
-          echo "Deploying..."
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
             npx vercel deploy --prod --token ${{ secrets.VERCEL_TOKEN }} --yes
           else
