@@ -51,18 +51,33 @@ jobs:
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
             # Production
             echo "Configuring for PRODUCTION"
-            sed -i "s|__EMAILJS_SERVICE_ID__|${{ secrets.EMAILJS_SERVICE_ID }}|g" src/environments/environment.prod.ts
-            sed -i "s|__EMAILJS_TEMPLATE_ID__|${{ secrets.EMAILJS_TEMPLATE_ID }}|g" src/environments/environment.prod.ts
-            sed -i "s|__EMAILJS_PUBLIC_KEY__|${{ secrets.EMAILJS_PUBLIC_KEY }}|g" src/environments/environment.prod.ts
+            echo "Service ID length: ${#EMAILJS_SERVICE_ID}"
+            echo "Template ID length: ${#EMAILJS_TEMPLATE_ID}"
+            echo "Public Key length: ${#EMAILJS_PUBLIC_KEY}"
+            
+            sed -i 's/__EMAILJS_SERVICE_ID__/'"$EMAILJS_SERVICE_ID"'/g' src/environments/environment.prod.ts
+            sed -i 's/__EMAILJS_TEMPLATE_ID__/'"$EMAILJS_TEMPLATE_ID"'/g' src/environments/environment.prod.ts
+            sed -i 's/__EMAILJS_PUBLIC_KEY__/'"$EMAILJS_PUBLIC_KEY"'/g' src/environments/environment.prod.ts
+            
+            echo "=== Modified environment.prod.ts ==="
             cat src/environments/environment.prod.ts
           else
             # Develop
             echo "Configuring for DEVELOP"
-            sed -i "s|REPLACE_EMAILJS_SERVICE_ID_DEVELOP|${{ secrets.EMAILJS_SERVICE_ID_DEV }}|g" src/environments/environment.develop.ts
-            sed -i "s|REPLACE_EMAILJS_TEMPLATE_ID_DEVELOP|${{ secrets.EMAILJS_TEMPLATE_ID_DEV }}|g" src/environments/environment.develop.ts
-            sed -i "s|REPLACE_EMAILJS_USER_ID_DEVELOP|${{ secrets.EMAILJS_PUBLIC_KEY_DEV }}|g" src/environments/environment.develop.ts
+            sed -i 's/REPLACE_EMAILJS_SERVICE_ID_DEVELOP/'"$EMAILJS_SERVICE_ID_DEV"'/g' src/environments/environment.develop.ts
+            sed -i 's/REPLACE_EMAILJS_TEMPLATE_ID_DEVELOP/'"$EMAILJS_TEMPLATE_ID_DEV"'/g' src/environments/environment.develop.ts
+            sed -i 's/REPLACE_EMAILJS_USER_ID_DEVELOP/'"$EMAILJS_PUBLIC_KEY_DEV"'/g' src/environments/environment.develop.ts
+            
+            echo "=== Modified environment.develop.ts ==="
             cat src/environments/environment.develop.ts
           fi
+        env:
+          EMAILJS_SERVICE_ID: ${{ secrets.EMAILJS_SERVICE_ID }}
+          EMAILJS_TEMPLATE_ID: ${{ secrets.EMAILJS_TEMPLATE_ID }}
+          EMAILJS_PUBLIC_KEY: ${{ secrets.EMAILJS_PUBLIC_KEY }}
+          EMAILJS_SERVICE_ID_DEV: ${{ secrets.EMAILJS_SERVICE_ID_DEV }}
+          EMAILJS_TEMPLATE_ID_DEV: ${{ secrets.EMAILJS_TEMPLATE_ID_DEV }}
+          EMAILJS_PUBLIC_KEY_DEV: ${{ secrets.EMAILJS_PUBLIC_KEY_DEV }}
 
       - name: Build Angular app
         run: |
