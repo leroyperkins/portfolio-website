@@ -4,6 +4,6 @@ export const environment = {
   emailjs: {
     serviceId: 'REPLACE_EMAILJS_SERVICE_ID_DEVELOP',
     templateId: 'REPLACE_EMAILJS_TEMPLATE_ID_DEVELOP',
-    userId: 'REPLACE_EMAILJS_USER_ID_DEVELOP'
+    publicKey: 'REPLACE_EMAILJS_USER_ID_DEVELOP'
   }
 };
