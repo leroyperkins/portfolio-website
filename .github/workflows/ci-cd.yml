@@ -98,9 +98,13 @@ jobs:
           # Pull Vercel environment information
           vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
           
+          # Copy build output to root for deployment
+          cp -r ./dist/portfolio-website/browser ./vercel-deploy
+          
           # Deploy based on branch
+          cd ./vercel-deploy
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --cwd ./dist/portfolio-website/browser
+            vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
           else
-            vercel deploy --token=${{ secrets.VERCEL_TOKEN }} --yes --cwd ./dist/portfolio-website/browser
+            vercel deploy --token=${{ secrets.VERCEL_TOKEN }} --yes
           fi
