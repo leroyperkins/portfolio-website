@@ -67,7 +67,7 @@ jobs:
           EMAILJS_PUBLIC_KEY: ${{ secrets.EMAILJS_PUBLIC_KEY }}
 
       - name: Build Angular app
-        run: npm run build -- --configuration production --base-href=/
+        run: npm run build -- --configuration production --base-href=/portfolio-website/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
