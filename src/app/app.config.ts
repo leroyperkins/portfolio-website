@@ -4,6 +4,7 @@ import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -38,6 +39,7 @@ export const appConfig: ApplicationConfig = {
       },
       titleClass: 'font-bold text-[var(--color-text)] text-base', 
       messageClass: 'text-[var(--color-text-secondary)] text-sm font-light'
-    })
+    }),
+    provideHttpClient(),
   ]
 };

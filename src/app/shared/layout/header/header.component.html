@@ -2,14 +2,20 @@
   <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-center">  
     <div class="flex gap-6 md:gap-8 text-sm md:text-base items-center">
       <a routerLink=""
+         [routerLinkActiveOptions]="{ exact: true }"
          routerLinkActive="font-bold underline"
          class="hover:text-[var(--color-accent)] hover:underline underline-offset-4 transition duration-200">
         Home
       </a>
+      <a routerLink="/experience"
+         routerLinkActive="font-bold underline"
+         class="hover:text-[var(--color-accent)] hover:underline underline-offset-4 transition duration-200">
+        Experience
+      </a>
       <a routerLink="/about"
          routerLinkActive="font-bold underline"
          class="hover:text-[var(--color-accent)] hover:underline underline-offset-4 transition duration-200">
-        About
+        Competencies
       </a>
       <a routerLink="/projects"
          routerLinkActive="font-bold underline"
@@ -23,6 +29,5 @@
       </a>
       <app-theme-toggle class="ml-6 md:ml-8"></app-theme-toggle>
     </div>
-
   </div>
 </nav>
