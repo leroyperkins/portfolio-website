@@ -1,4 +1,3 @@
-// src/app/data/resume.data.ts
 export interface ResumeData {
   hero: {
     name: string;
@@ -56,7 +55,6 @@ export const RESUME_DATA: ResumeData = {
     ],
     concepts: [
       "Full-Stack Development",
-      "",
       "Automated Testing Frameworks",
       "CI/CD Pipelines",
       "Agile Leadership",

@@ -21,6 +21,11 @@ export const routes: Routes = [
     loadChildren: () => import('./modules/contact-module/contact-routing.module')
       .then(m => m.ContactRoutingModule)
   },
+  {
+    path: 'experience',
+    loadChildren: () => import('./modules/experience-module/experience-routing.module')
+      .then(m => m.ExperienceRoutingModule)
+  },
   { path: '', redirectTo: '/about', pathMatch: 'full' },
   { path: '**', redirectTo: '/about' }
 ];
