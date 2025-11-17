@@ -14,6 +14,5 @@ export class ProjectsComponent {
 
   handleImageError(event: Event, title: string): void {
     console.error(`PNG load failed for project "${title}". Verify path: ${(event.target as HTMLImageElement).src}`);
-    //(event.target as HTMLImageElement).src = 'assets/fallback-placeholder.png';
   }
 }

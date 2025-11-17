@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';  // Add withInMemoryScrolling import
+import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
       closeButton: true,
       tapToDismiss: true,
       newestOnTop: true,
-      toastClass: 'ngx-toastr bg-[var(--color-surface)] text-[var(--color-text)] border border-[var(--color-border)] rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-[var(--color-accent)]/30 transition-all duration-300 max-w-md mx-auto',  // Bubble-like: rounded, shadowed, centered width
+      toastClass: 'ngx-toastr bg-[var(--color-surface)] text-[var(--color-text)] border border-[var(--color-border)] rounded-2xl shadow-xl hover:shadow-2xl hover:shadow-[var(--color-accent)]/30 transition-all duration-300 max-w-md mx-auto',
       iconClasses: {
         error: 'toast-error text-red-500',
         info: 'toast-info text-blue-500',
