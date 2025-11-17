@@ -6,7 +6,7 @@
     "types": [
       "jasmine",
       "node",
-      "webpack-env"  // Addition: Includes Webpack types for require.context in test entry point
+      "webpack-env"
     ]
   },
   "files": [

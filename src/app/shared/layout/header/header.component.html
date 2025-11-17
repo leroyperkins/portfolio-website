@@ -1,18 +1,21 @@
-<!-- src/app/components/header/header.component.html -->
 <nav class="bg-[var(--color-surface)]/80 backdrop-blur-md border-b border-[var(--color-border)] text-[var(--color-text)] shadow-lg sticky top-0 z-50 select-none">
-  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-center">  <!-- Switched to justify-center for centered nav; added px-4 for edge padding on mobile -->
-
-    <!-- Navigation Links with Theme Toggle inline as next in line -->
-    <div class="flex gap-6 md:gap-8 text-sm md:text-base items-center">  <!-- Added items-center for vertical alignment of toggle -->
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-center">  
+    <div class="flex gap-6 md:gap-8 text-sm md:text-base items-center">
       <a routerLink=""
+         [routerLinkActiveOptions]="{ exact: true }"
          routerLinkActive="font-bold underline"
          class="hover:text-[var(--color-accent)] hover:underline underline-offset-4 transition duration-200">
         Home
       </a>
+      <a routerLink="/experience"
+         routerLinkActive="font-bold underline"
+         class="hover:text-[var(--color-accent)] hover:underline underline-offset-4 transition duration-200">
+        Experience
+      </a>
       <a routerLink="/about"
          routerLinkActive="font-bold underline"
          class="hover:text-[var(--color-accent)] hover:underline underline-offset-4 transition duration-200">
-        About
+        Competencies
       </a>
       <a routerLink="/projects"
          routerLinkActive="font-bold underline"
@@ -24,8 +27,7 @@
          class="hover:text-[var(--color-accent)] hover:underline underline-offset-4 transition duration-200">
         Contact
       </a>
-      <app-theme-toggle class="ml-6 md:ml-8"></app-theme-toggle>  <!-- Inline as next item; ml matches gap for seamless spacing -->
+      <app-theme-toggle class="ml-6 md:ml-8"></app-theme-toggle>
     </div>
-
   </div>
 </nav>
