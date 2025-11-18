@@ -5,6 +5,7 @@ import emailjs, { EmailJSResponseStatus } from '@emailjs/browser';
 import { ToastrService } from 'ngx-toastr';
 import { ButtonComponent } from '../../../shared/layout/button/button.component';
 import { environment } from '../../../../environments/environment';
+import { SeoService } from '../../../services/seo/seo.service';
 
 @Component({
   selector: 'app-contact',
@@ -15,6 +16,7 @@ import { environment } from '../../../../environments/environment';
 export class ContactComponent implements OnInit {
   private fb = inject(FormBuilder);
   private toastr = inject(ToastrService);
+  private seoService = inject(SeoService);
   contactForm!: FormGroup;
   messageLength = 0;
   maxMessageLength = 500;
@@ -31,6 +33,11 @@ export class ContactComponent implements OnInit {
     this.contactForm.get('message')?.valueChanges.subscribe((value: string) => {
       this.messageLength = value?.length || 0;
     });
+
+    this.seoService.updateMetaTags(
+      'Contact',
+      'Contact for any inquriries or opportunities'
+    );
   }
 
   async submit() {
