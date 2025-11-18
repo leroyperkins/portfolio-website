@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ResumeService } from '../../../services/resume/resume.service';
 import { GithubApiService } from '../../../services/github-api/github-api.service';
+import { SeoService } from '../../../services/seo/seo.service';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,8 @@ import { GithubApiService } from '../../../services/github-api/github-api.servic
 export class HomeComponent implements OnInit {
   private resumeService = inject(ResumeService);
   private githubService = inject(GithubApiService);
-
+  private seoService = inject(SeoService);
+  
   data = this.resumeService.data;
   languages: { name: string; percentage: number; color: string }[] = [];
 
@@ -26,6 +28,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.fetchRepoLanguages('leroyperkins', 'portfolio-website');
+    this.seoService.updateMetaTags(
+      'Home',
+      'Explore my portfolio: This website was built using Angular, TypeScript, and Tailwind.'
+    );
   }
 
   private fetchRepoLanguages(owner: string, repo: string) {

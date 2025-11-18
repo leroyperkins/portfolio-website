@@ -26,6 +26,5 @@ export const routes: Routes = [
     loadChildren: () => import('./modules/experience-module/experience-routing.module')
       .then(m => m.ExperienceRoutingModule)
   },
-  { path: '', redirectTo: '/about', pathMatch: 'full' },
-  { path: '**', redirectTo: '/about' }
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
