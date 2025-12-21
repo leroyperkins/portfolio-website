@@ -1,12 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-button',
   imports: [CommonModule, RouterModule],
   standalone: true,
-  encapsulation: ViewEncapsulation.None,
   template: `
     <button
       [type]="type"
