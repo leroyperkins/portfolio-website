@@ -1,24 +1,21 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ResumeService } from '../../../services/resume/resume.service';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { SeoService } from '../../../services/seo/seo.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-projects.component',
-  imports: [NgFor, NgIf, NgClass],
+  imports: [NgFor, NgIf, NgClass, RouterLink],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css',
 })
-export class ProjectsComponent {
+export class ProjectsComponent implements OnInit{
   private resumeService = inject(ResumeService);
   data = this.resumeService.data;
 
-  handleImageError(event: Event, title: string): void {
-    console.error(`PNG load failed for project "${title}". Verify path: ${(event.target as HTMLImageElement).src}`);
-  }
-
     private seoService = inject(SeoService);
-    OnInit(): void {
+    ngOnInit(): void {
       this.seoService.updateMetaTags(
         'Projects',
         'Showcasing passionate software projects'

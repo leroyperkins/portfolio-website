@@ -5,21 +5,20 @@
     </h1>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       <article *ngFor="let p of data.projects"
-               class="bg-gray-50 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-600 overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-emerald-500/30 dark:hover:shadow-emerald-400/30 transition-all group select-none">
+               [routerLink]="[p.slug]"
+               class="cursor-pointer bg-gray-50 dark:bg-gray-800/60 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-600 overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-emerald-500/30 dark:hover:shadow-emerald-400/30 transition-all group select-none">
         
         <div class="h-48 bg-gray-100 dark:bg-gray-700 border-b border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center overflow-hidden">
-          <img *ngIf="p.image; else fallbackTitle"
+          <img *ngIf="p.image"
                [src]="p.image"
                [alt]="'Illustrative photo for ' + p.title"
                [ngClass]="{
                  'w-full h-full object-cover transition-transform duration-300 group-hover:scale-105': true,
                  'object-[50%_75%]': p.title.includes('Balloon')
                }"
-               loading="lazy"
-               (error)="handleImageError($event, p.title) ">
-          <ng-template #fallbackTitle>
-            <span class="text-gray-500 dark:text-gray-400 font-mono text-sm">{{ p.title }}</span>
-          </ng-template>
+               loading="lazy">
+          <!-- Optional: Add fallback if needed -->
+          <span *ngIf="!p.image" class="text-gray-500 dark:text-gray-400 font-mono text-sm">{{ p.title }}</span>
         </div>
 
         <div class="p-6 space-y-4">

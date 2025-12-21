@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
   selector: 'app-button',
   imports: [CommonModule, RouterModule],
   standalone: true,
-  encapsulation: ViewEncapsulation.None,
   template: `
     <button
       [type]="type"
