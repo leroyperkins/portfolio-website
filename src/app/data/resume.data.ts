@@ -21,6 +21,7 @@ export interface ResumeData {
   }[];
   projects: {
     title: string;
+    slug: string;
     role: string;
     impact: string;
     metrics?: string;
@@ -106,8 +107,9 @@ export const RESUME_DATA: ResumeData = {
   projects: [
     {
       title: "Project F.R.E.A.K. - Senior Capstone Project",
+      slug: 'freak',
       role: "Field-ready Rocket Evaluation and Analytics Kit",
-      impact: "Worked in team of 6 students to design, test, and deliver software solution to Mizzou Space Program customer. Did application planning/design for 1 semester, then agile development and implementation for 1 semester.",
+      impact: "Worked in team of 6 students to design, test, and deliver software solution to Mizzou Space Program customer. Application design Fall 2024, development and implementation Spring 2025.",
       metrics: "Reduced data dump time from 4+ hrs to <5 mins",
       tech: ["C#", "LabJack T4", "Live Graphs", "Safety Checks", "Sensor Health"],
       links: {},
@@ -115,6 +117,7 @@ export const RESUME_DATA: ResumeData = {
     },
     {
       title: "L1 High Powered Rocket - Mizzou Space Program",
+      slug: "level1",
       role: "Designed, constructed, and tested L1 rocket to gain Tripoli L1 rocketry certification",
       impact: "Used machine tools, techniques and software to create rocket to pass key requirements for L1 flight",
       metrics: "Selective Process within club as an achievement for active participation, attendance, and contribution to projects/events",
@@ -124,6 +127,7 @@ export const RESUME_DATA: ResumeData = {
     },
     {
       title: "High Altitude Balloon - Mizzou Space Program",
+      slug: "balloon",
       role: "High-altitude balloon traveling to ~75k feet to gather basic sensor data. Built from Arduino, included temperature, humidity, pressure and Geiger counter sensors.",
       impact: "Led development of sensor hardware within new-member team. Coded and tested to ensure sensors were functional prior to balloon launch.",
       metrics: "Achieved goal of recovering Balloon data, predictions prior to launch proved correct with recovery and processing of sensor data",
