@@ -117,7 +117,7 @@ export const RESUME_DATA: ResumeData = {
     },
     {
       title: "L1 High Powered Rocket - Mizzou Space Program",
-      slug: "l1-rocket",
+      slug: "level1",
       role: "Designed, constructed, and tested L1 rocket to gain Tripoli L1 rocketry certification",
       impact: "Used machine tools, techniques and software to create rocket to pass key requirements for L1 flight",
       metrics: "Selective Process within club as an achievement for active participation, attendance, and contribution to projects/events",
