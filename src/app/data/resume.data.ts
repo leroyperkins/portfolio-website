@@ -117,7 +117,7 @@ export const RESUME_DATA: ResumeData = {
     },
     {
       title: "L1 High Powered Rocket - Mizzou Space Program",
-      slug: "l1-rocket",
+      slug: "level1",
       role: "Designed, constructed, and tested L1 rocket to gain Tripoli L1 rocketry certification",
       impact: "Used machine tools, techniques and software to create rocket to pass key requirements for L1 flight",
       metrics: "Selective Process within club as an achievement for active participation, attendance, and contribution to projects/events",
@@ -127,7 +127,7 @@ export const RESUME_DATA: ResumeData = {
     },
     {
       title: "High Altitude Balloon - Mizzou Space Program",
-      slug: "ha-balloon",
+      slug: "balloon",
       role: "High-altitude balloon traveling to ~75k feet to gather basic sensor data. Built from Arduino, included temperature, humidity, pressure and Geiger counter sensors.",
       impact: "Led development of sensor hardware within new-member team. Coded and tested to ensure sensors were functional prior to balloon launch.",
       metrics: "Achieved goal of recovering Balloon data, predictions prior to launch proved correct with recovery and processing of sensor data",
