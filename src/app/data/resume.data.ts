@@ -127,7 +127,7 @@ export const RESUME_DATA: ResumeData = {
     },
     {
       title: "High Altitude Balloon - Mizzou Space Program",
-      slug: "ha-balloon",
+      slug: "balloon",
       role: "High-altitude balloon traveling to ~75k feet to gather basic sensor data. Built from Arduino, included temperature, humidity, pressure and Geiger counter sensors.",
       impact: "Led development of sensor hardware within new-member team. Coded and tested to ensure sensors were functional prior to balloon launch.",
       metrics: "Achieved goal of recovering Balloon data, predictions prior to launch proved correct with recovery and processing of sensor data",

@@ -17,3 +17,4 @@ export class ProjectFreakDetailComponent implements OnInit {
     );
   }
 }
+
