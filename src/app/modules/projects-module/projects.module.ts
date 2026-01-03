@@ -5,6 +5,7 @@ import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectFreakDetailComponent } from './project-freak/project-freak-details.component';
 import { ProjectBalloonDetailsComponent } from './balloon-project/project-balloon-details.component'
 import { Level1ProjectDetailsComponent } from './level1-project/level1-project-details.component'
+import { RobotArmDetailsComponent } from './robot-arm-project/robot-arm-details.component'
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { Level1ProjectDetailsComponent } from './level1-project/level1-project-d
     ProjectsComponent,
     ProjectFreakDetailComponent,
     ProjectBalloonDetailsComponent,
-    Level1ProjectDetailsComponent 
+    Level1ProjectDetailsComponent,
+    RobotArmDetailsComponent
   ]
 })
 export class ProjectsModule { }
