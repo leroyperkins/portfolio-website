@@ -113,7 +113,7 @@ export const RESUME_DATA: ResumeData = {
       metrics: "Reduced data dump time from 4+ hrs to <5 mins",
       tech: ["C#", "LabJack T4", "Live Graphs", "Safety Checks", "Sensor Health"],
       links: {},
-      image: 'assets/project-photos/project-freak/project-freak.png'
+      image: 'assets/project-photos/project-freak/project-freak.webp'
     },
     {
       title: "L1 High Powered Rocket - Mizzou Space Program",
@@ -123,7 +123,7 @@ export const RESUME_DATA: ResumeData = {
       metrics: "Selective Process within club as an achievement for active participation, attendance, and contribution to projects/events",
       tech: ["Amateur Rocketry", "Rocket Design", "Machine Tools", "3d Part Design"],
       links: {},
-      image: 'assets/project-photos/level1-cert/level1-cert.png'
+      image: 'assets/project-photos/level1-cert/level1-cert.webp'
     },
     {
       title: "High Altitude Balloon - Mizzou Space Program",
@@ -133,7 +133,7 @@ export const RESUME_DATA: ResumeData = {
       metrics: "Achieved goal of recovering Balloon data, predictions prior to launch proved correct with recovery and processing of sensor data",
       tech: ["Arduino", "Geiger Counter", "Data Dumps", "Temperature Prediction", "Barometer Data"],
       links: {},
-      image: 'assets/project-photos/space-balloon/space-balloon.png'
+      image: 'assets/project-photos/space-balloon/space-balloon.webp'
     }
   ],
 
