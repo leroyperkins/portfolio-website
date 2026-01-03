@@ -97,9 +97,9 @@ export const RESUME_DATA: ResumeData = {
       location: "Columbia, MO",
       dates: "AUG 2022 - MAY 2023",
       bullets: [
-        "Assisted in the development of a GUI driven C# computer program for the analysis and design of blast resistant windows.",
-        "GUI program is designed to model Static Resistance Function to enhance resilience of critical infrastructure against explosive events.",
-        "Graphing, numerical input, user-defined glass types, blast load specificity."
+        "Developed a GUI-driven C# program for analyzing and designing blast-resistant windows, modeling Static Resistance Function to enhance critical infrastructure resilience against explosive events as part of an Army-funded proof-of-concept.",
+        "Refined user experience by optimizing GUI elements, ensuring accurate graph rendering for stress-strain visualizations, and implemented features for numerical inputs, user-defined class types, and customizable blast load parameters.",
+        "Enabled reusable simulations by adding data collection and parameter saving capabilities, allowing engineers to specify and rerun scenarios that directly contributed to research on strain rate responses of laminated glass interlayers"
       ]
     }
   ],
@@ -134,7 +134,18 @@ export const RESUME_DATA: ResumeData = {
       tech: ["Arduino", "Geiger Counter", "Data Dumps", "Temperature Prediction", "Barometer Data"],
       links: {},
       image: 'assets/project-photos/space-balloon/space-balloon.webp'
+    },
+    {
+      title: "Robot Arm - A.N.T.H.O.N.Y. (Automated Novel Tool for Handling Objects Neatly, Yup)",
+      slug: "robot-arm",
+      role: "Conceptualized and built a weekend project to learn robotic fundamentals and hardware/software integration for simple robot arm that waves at guests for NYE party.",
+      impact: "Leveraged open-source models to accelerate development, reducing stand-up time while focusing on digesting core concepts e.g. kinematics, control loops, and sensor integration.",
+      metrics: "Delivered functional MVP ~48 hours, including basic code for motion sequence, achieving reliable waving functionality and validating initial system design.",
+      tech: ["ESP32", "Arduino", "Servo Control", "Electronics Control", "Embedded Hardware"],
+      links: {},
+      image: 'assets/project-photos/robot-arm/robot-arm.webp'
     }
+
   ],
 
   education: {
@@ -156,7 +167,7 @@ export const RESUME_DATA: ResumeData = {
     {
       name: "Mizzou Club Triathlon",
       role: "Weekly practices of swimming, biking, and running",
-      dates: "AUG 2023 - Present",
+      dates: "AUG 2023 - MAY 2025",
       bullets: [
         "Bike & Run Coach",
         "Attend professional collegiate competitions"
