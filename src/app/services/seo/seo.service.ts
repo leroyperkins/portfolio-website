@@ -15,7 +15,7 @@ export class SeoService {
     this.meta.updateTag({ property: 'og:title', content: `${title} | Carson Turner | SWE` });
     this.meta.updateTag({ property: 'og:description', content: description });
     this.meta.updateTag({ property: 'og:url', content: window.location.href });
-    this.meta.updateTag({ property: 'og:image', content: 'https://carsonturner.dev/assets/preview.jpg' });
+    this.meta.updateTag({ property: 'og:image', content: 'https://carsonturner.dev/assets/preview.webp' });
     this.meta.updateTag({ property: 'og:type', content: 'website' });
   }
 }
